@@ -4,4 +4,4 @@ dependencies:
   idf:
     version: ">=4.4.0"
   libmapper-esp:
-    git: git@github.com:mathiasbredholt/libmapper-esp.git
+    git: https://github.com/mathiasbredholt/libmapper-esp.git
