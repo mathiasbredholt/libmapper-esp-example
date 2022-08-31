@@ -1,0 +1,7 @@
+## IDF Component Manager Manifest File
+dependencies:
+  ## Required IDF version
+  idf:
+    version: ">=4.4.0"
+  libmapper-esp:
+    git: git@github.com:mathiasbredholt/libmapper-esp.git

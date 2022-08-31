@@ -1,3 +1,5 @@
 sdkconfig
 build
 .DS_Store
+managed_components
+dependencies.lock

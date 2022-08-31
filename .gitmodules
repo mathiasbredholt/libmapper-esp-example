@@ -1,3 +1,0 @@
-[submodule "components/libmapper-esp"]
-	path = components/libmapper-esp
-	url = https://github.com/mathiasbredholt/libmapper-esp.git
