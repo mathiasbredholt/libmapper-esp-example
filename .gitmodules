@@ -1,3 +1,3 @@
-[submodule "components/libmapper_idf"]
-	path = components/libmapper_idf
-	url = https://github.com/mathiasbredholt/libmapper_idf.git
+[submodule "components/libmapper-esp"]
+	path = components/libmapper-esp
+	url = https://github.com/mathiasbredholt/libmapper-esp.git

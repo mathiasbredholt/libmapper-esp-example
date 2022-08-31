@@ -1,9 +1,8 @@
+#include "esp_event.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "esp_event.h"
+#include "mapper/mapper.h"
 #include "nvs_flash.h"
-
-#include "mpr/mpr.h"
 #include "protocol_examples_common.h"
 
 void handler(mpr_sig sig, mpr_sig_evt evt, mpr_id inst, int length,
@@ -12,9 +11,9 @@ void handler(mpr_sig sig, mpr_sig_evt evt, mpr_id inst, int length,
 }
 
 void app_main() {
-// Connect to Wifi
+  // Connect to Wifi
   ESP_ERROR_CHECK(nvs_flash_init());
-  tcpip_adapter_init();
+  ESP_ERROR_CHECK(esp_netif_init());
   ESP_ERROR_CHECK(esp_event_loop_create_default());
   ESP_ERROR_CHECK(example_connect());
 
@@ -27,6 +26,14 @@ void app_main() {
                              handler, MPR_SIG_UPDATE);
   mpr_sig sig2 = mpr_sig_new(dev, MPR_DIR_OUT, "output", 1, MPR_INT32, 0, 0, 0,
                              0, handler, MPR_SIG_UPDATE);
+
+  // Test signals
+  for (int i = 0; i < 32; ++i) {
+    char buf[128];
+    snprintf(buf, 128, "%d\n", i);
+    mpr_sig sig2 = mpr_sig_new(dev, MPR_DIR_OUT, buf, 1, MPR_INT32, 0, 0,
+                               0, 0, handler, MPR_SIG_UPDATE);
+  }
 
   // Create map between signals, requires the device to be initialized,
   // so poll the device until it is ready
@@ -41,7 +48,7 @@ void app_main() {
     mpr_dev_poll(dev, 0);
 
     // Update and send signal value
-    mpr_sig_set_value(sig2, 0, 1, MPR_INT32, &i, MPR_NOW);
+    mpr_sig_set_value(sig2, 0, 1, MPR_INT32, &i);
     ++i;
 
     // Block task for 10 milliseconds
